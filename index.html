@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>اقرأ من أول وجديد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="page">
+  <div class="phone" id="phone">
+
+    <!-- ============ 1. SPLASH ============ -->
+    <section class="screen screen--splash is-active" id="screen-splash">
+      <div class="blob blob--a" aria-hidden="true"></div>
+      <div class="blob blob--b" aria-hidden="true"></div>
+
+      <div class="splash-logo rise" style="--d:.05s">
+        <span>📖</span>
+      </div>
+
+      <div class="splash-text">
+        <h1 class="rise" style="--d:.15s">اقرأ من أول وجديد</h1>
+        <p class="rise" style="--d:.25s">اقرأ، اسمع، واتدرّب</p>
+      </div>
+
+      <div class="splash-actions rise" style="--d:.35s">
+        <button class="btn btn--light btn--lg btn--full" id="btn-start">ابدأ الآن</button>
+        <button class="link-btn" id="btn-test-sound">🔊 تجربة الصوت قبل العرض</button>
+      </div>
+    </section>
+
+    <!-- ============ 2. UPLOAD BOOK ============ -->
+    <section class="screen" id="screen-upload">
+      <button class="back-btn" data-back="screen-splash" aria-label="رجوع">→</button>
+      <div class="screen-inner">
+        <p class="eyebrow">الخطوة ١ من ٢</p>
+        <h2 class="title">ارفع كتابك</h2>
+        <p class="subtitle">اختار الكتاب أو الصفحة اللي عايز تقرأها.</p>
+
+        <div id="upload-idle">
+          <button class="upload-area" id="btn-upload-area">
+            <span class="upload-icon">📄</span>
+            <span class="upload-text">اسحب ملف PDF هنا</span>
+            <span class="upload-or">أو</span>
+            <span class="btn-chip">اختر ملف</span>
+          </button>
+
+          <button class="btn btn--secondary btn--full" id="btn-camera">
+            <span>📷</span><span>تصوير صفحة</span>
+          </button>
+        </div>
+
+        <div id="upload-analyzing" class="hidden center-col">
+          <div class="spinner"></div>
+          <p class="bold-text">جاري تحليل الصفحة...</p>
+          <span class="mock-tag">محاكاة تجريبية · Demo</span>
+        </div>
+
+        <div id="upload-done" class="hidden rise">
+          <div class="success-box">
+            <span class="success-icon">✓</span>
+            <div>
+              <p class="bold-text">تم استخراج النص</p>
+              <p class="muted-text">الكتاب: «الأرنب الصغير»</p>
+            </div>
+          </div>
+          <div class="extracted-text">كان هناك أرنب صغير يعيش في حديقة جميلة.</div>
+          <button class="btn btn--lg btn--full" id="btn-start-reading">ابدأ القراءة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. READING ============ -->
+    <section class="screen" id="screen-reading">
+      <button class="back-btn" data-back="screen-upload" aria-label="رجوع">→</button>
+      <div class="screen-inner">
+        <div class="row-between">
+          <p class="eyebrow" style="margin:0">الخطوة ٢ من ٣</p>
+          <span id="no-speech-warning" class="hidden warning-tag">المتصفح لا يدعم الصوت</span>
+        </div>
+        <h2 class="title">قراءة النص</h2>
+
+        <div class="story-box" id="story-box">
+          <div class="story-words" id="story-words"></div>
+          <div class="story-easy" id="story-easy">
+            <span>كان هناك</span>
+            <span>أرنب صغير</span>
+            <span>يعيش في حديقة</span>
+            <span>جميلة.</span>
+          </div>
+        </div>
+
+        <div class="controls-grid">
+          <button class="ctrl-btn" id="btn-listen"><span class="ctrl-icon">🔊</span><span>استمع</span></button>
+          <button class="ctrl-btn" id="btn-pause"><span class="ctrl-icon">⏸</span><span>إيقاف</span></button>
+          <button class="ctrl-btn" id="btn-repeat"><span class="ctrl-icon">🔁</span><span>إعادة</span></button>
+          <button class="ctrl-btn" id="btn-easy"><span class="ctrl-icon">🔤</span><span>تسهيل</span></button>
+        </div>
+
+        <label class="toggle-row">
+          <span class="bold-text">وضع تسهيل القراءة</span>
+          <button class="toggle" id="toggle-easy" role="switch" aria-checked="false">
+            <span class="toggle-knob"></span>
+          </button>
+        </label>
+
+        <div class="word-card">
+          <div class="word-emoji">🐇</div>
+          <div class="word-info">
+            <p class="word-label">كلمة اليوم 🌟</p>
+            <p class="word-main">أرنب</p>
+            <p class="word-meaning">حيوان صغير يحب الجزر.</p>
+          </div>
+          <button class="circle-btn" id="btn-word-of-day" aria-label="اسمع الكلمة">🔊</button>
+        </div>
+
+        <div class="spacer"></div>
+        <button class="btn btn--lg btn--full" id="btn-go-practice">حان دورك 🎤</button>
+      </div>
+    </section>
+
+    <!-- ============ 4. VOICE PRACTICE ============ -->
+    <section class="screen" id="screen-voice">
+      <button class="back-btn" data-back="screen-reading" aria-label="رجوع">→</button>
+      <div class="screen-inner">
+        <p class="eyebrow">الخطوة ٣ من ٣</p>
+        <h2 class="title">حان دورك 🎤</h2>
+
+        <div class="practice-sentence-box">
+          <p class="practice-sentence">كان هناك أرنب صغير.</p>
+          <button class="circle-btn" id="btn-listen-practice" aria-label="اسمع الجملة">🔊</button>
+        </div>
+
+        <p class="center-text bold-text" id="practice-hint">اقرأ الجملة بصوتك</p>
+
+        <div class="mic-area" id="mic-area">
+          <button class="mic-btn" id="btn-mic" aria-label="ابدأ التسجيل">🎤</button>
+        </div>
+
+        <div id="word-results" class="word-results hidden"></div>
+
+        <div id="mistake-card" class="mistake-card hidden">
+          <p class="bold-text">حاول مرة أخرى</p>
+          <p class="mistake-word">صغير</p>
+          <div class="breakdown-row">
+            <span class="chunk">صـ</span>
+            <span class="chunk">ـغـ</span>
+            <span class="chunk">يـ</span>
+            <span class="chunk">ـر</span>
+          </div>
+          <p class="center-text muted-text">حاول نطقها ببطء.</p>
+          <button class="btn btn--secondary btn--full" id="btn-correct-pronunciation">
+            <span>🔊</span><span id="correct-pron-label">اسمع النطق الصحيح</span>
+          </button>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="progress-box">
+          <div class="progress-head">
+            <span class="bold-text">Reading Progress</span>
+            <span class="bold-text">80%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+          <p class="muted-text bold-text" style="margin-top:.75rem">الكلمات الصحيحة: ٩ / ١٠</p>
+        </div>
+
+        <div class="action-row" id="action-row">
+          <button class="btn btn--outline-danger btn--full" id="btn-simulate-mistake">Simulate Mistake</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
