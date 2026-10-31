@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>اقرأ من أول وجديد</title>
+<title>اقرأ </title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
@@ -24,7 +24,7 @@
       </div>
 
       <div class="splash-text">
-        <h1 class="rise" style="--d:.15s">اقرأ من أول وجديد</h1>
+        <h1 class="rise" style="--d:.15s">اقرأ </h1>
         <p class="rise" style="--d:.25s">اقرأ، اسمع، واتدرّب</p>
       </div>
 
@@ -66,11 +66,12 @@
             <span class="success-icon">✓</span>
             <div>
               <p class="bold-text">تم استخراج النص</p>
-              <p class="muted-text">الكتاب: «الأرنب الصغير»</p>
+              <p class="muted-text" id="upload-book-info"></p>
             </div>
           </div>
-          <div class="extracted-text">كان هناك أرنب صغير يعيش في حديقة جميلة.</div>
+          <div class="extracted-text" id="upload-preview"></div>
           <button class="btn btn--lg btn--full" id="btn-start-reading">ابدأ القراءة</button>
+          <button class="link-btn link-btn--dark" id="btn-upload-another">📄 رفع كتاب آخر</button>
         </div>
       </div>
     </section>
@@ -85,14 +86,19 @@
         </div>
         <h2 class="title">قراءة النص</h2>
 
+        <div class="book-bar">
+          <span class="book-chip" id="reading-book-chip"></span>
+          <span class="sentence-counter" id="reading-counter"></span>
+        </div>
+
         <div class="story-box" id="story-box">
           <div class="story-words" id="story-words"></div>
-          <div class="story-easy" id="story-easy">
-            <span>كان هناك</span>
-            <span>أرنب صغير</span>
-            <span>يعيش في حديقة</span>
-            <span>جميلة.</span>
-          </div>
+        </div>
+
+        <div class="sentence-nav">
+          <button class="nav-btn" id="btn-prev-sentence">→ السابقة</button>
+          <div class="dots" id="sentence-dots" aria-hidden="true"></div>
+          <button class="nav-btn" id="btn-next-sentence">التالية ←</button>
         </div>
 
         <div class="controls-grid">
@@ -110,11 +116,11 @@
         </label>
 
         <div class="word-card">
-          <div class="word-emoji">🐇</div>
+          <div class="word-emoji" id="wod-emoji"></div>
           <div class="word-info">
             <p class="word-label">كلمة اليوم 🌟</p>
-            <p class="word-main">أرنب</p>
-            <p class="word-meaning">حيوان صغير يحب الجزر.</p>
+            <p class="word-main" id="wod-word"></p>
+            <p class="word-meaning" id="wod-meaning"></p>
           </div>
           <button class="circle-btn" id="btn-word-of-day" aria-label="اسمع الكلمة">🔊</button>
         </div>
@@ -131,28 +137,26 @@
         <p class="eyebrow">الخطوة ٣ من ٣</p>
         <h2 class="title">حان دورك 🎤</h2>
 
+        <div class="book-bar">
+          <span class="book-chip" id="voice-book-chip"></span>
+          <span class="sentence-counter" id="voice-counter"></span>
+        </div>
+
         <div class="practice-sentence-box">
-          <p class="practice-sentence">كان هناك أرنب صغير.</p>
+          <p class="practice-sentence" id="practice-sentence"></p>
           <button class="circle-btn" id="btn-listen-practice" aria-label="اسمع الجملة">🔊</button>
         </div>
 
         <p class="center-text bold-text" id="practice-hint">اقرأ الجملة بصوتك</p>
 
-        <div class="mic-area" id="mic-area">
-          <button class="mic-btn" id="btn-mic" aria-label="ابدأ التسجيل">🎤</button>
-        </div>
+        <div class="mic-area" id="mic-area"></div>
 
         <div id="word-results" class="word-results hidden"></div>
 
         <div id="mistake-card" class="mistake-card hidden">
           <p class="bold-text">حاول مرة أخرى</p>
-          <p class="mistake-word">صغير</p>
-          <div class="breakdown-row">
-            <span class="chunk">صـ</span>
-            <span class="chunk">ـغـ</span>
-            <span class="chunk">يـ</span>
-            <span class="chunk">ـر</span>
-          </div>
+          <p class="mistake-word" id="mistake-word"></p>
+          <div class="breakdown-row" id="mistake-breakdown"></div>
           <p class="center-text muted-text">حاول نطقها ببطء.</p>
           <button class="btn btn--secondary btn--full" id="btn-correct-pronunciation">
             <span>🔊</span><span id="correct-pron-label">اسمع النطق الصحيح</span>
@@ -164,15 +168,13 @@
         <div class="progress-box">
           <div class="progress-head">
             <span class="bold-text">Reading Progress</span>
-            <span class="bold-text">80%</span>
+            <span class="bold-text" id="progress-percent">0%</span>
           </div>
-          <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
-          <p class="muted-text bold-text" style="margin-top:.75rem">الكلمات الصحيحة: ٩ / ١٠</p>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+          <p class="muted-text bold-text" id="progress-words" style="margin-top:.75rem"></p>
         </div>
 
-        <div class="action-row" id="action-row">
-          <button class="btn btn--outline-danger btn--full" id="btn-simulate-mistake">Simulate Mistake</button>
-        </div>
+        <div class="action-row" id="action-row"></div>
       </div>
     </section>
 
