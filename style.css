@@ -344,16 +344,76 @@ button:focus-visible, [role="button"]:focus-visible {
   40% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
-.story-easy {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
+/* Words are grouped in .chunk wrappers: invisible in normal mode,
+   one short line per chunk in easy-reading mode. */
+.chunk { display: contents; }
+
+.story-box.easy {
   font-size: 1.875rem;
   line-height: 3.2rem;
   letter-spacing: .02em;
 }
-.story-box.easy .story-words { display: none; }
-.story-box:not(.easy) .story-easy { display: none; }
+.story-box.easy .story-words {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: .75rem;
+}
+.story-box.easy .chunk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 .75rem;
+}
+
+.book-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: -.75rem;
+}
+.book-chip {
+  border-radius: 999px;
+  background: var(--river-100);
+  color: var(--river-700);
+  font-weight: 700;
+  font-size: .875rem;
+  padding: .25rem .875rem;
+}
+.sentence-counter {
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--river-500);
+}
+
+.sentence-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: -.5rem;
+}
+.nav-btn {
+  border-radius: .75rem;
+  border: 2px solid var(--river-200);
+  background: #fff;
+  color: var(--river-700);
+  font-weight: 700;
+  font-size: .875rem;
+  padding: .5rem .875rem;
+  transition: border-color .15s, background-color .15s;
+}
+.nav-btn:hover:not(:disabled) { border-color: var(--river-400); background: var(--river-50); }
+.nav-btn:disabled { opacity: .35; cursor: default; }
+.dots { display: flex; gap: .4rem; align-items: center; }
+.dot {
+  width: .6rem;
+  height: .6rem;
+  border-radius: 999px;
+  background: var(--river-200);
+}
+.dot.done { background: var(--leaf-500); }
+.dot.current { background: var(--river-600); transform: scale(1.3); }
+.dot.current.done { background: var(--leaf-500); box-shadow: 0 0 0 2px var(--river-600); }
 
 .controls-grid {
   display: grid;
@@ -510,7 +570,7 @@ button:focus-visible, [role="button"]:focus-visible {
   justify-content: center;
   gap: .5rem;
 }
-.chunk {
+.chunk-pill {
   border-radius: .75rem;
   background: #fff;
   border: 1px solid var(--river-100);
@@ -538,7 +598,14 @@ button:focus-visible, [role="button"]:focus-visible {
   transition: width .7s ease-out;
 }
 
-.action-row { display: flex; gap: .75rem; }
+.action-row { display: flex; flex-direction: column; gap: .75rem; }
+
+.link-btn--dark {
+  display: block;
+  margin: 1rem auto 0;
+  color: var(--river-600);
+}
+.link-btn--dark:hover { color: var(--river-800); }
 
 /* ---------- Motion helpers ---------- */
 .rise { animation: rise-in .45s ease-out both; animation-delay: var(--d, 0s); }
